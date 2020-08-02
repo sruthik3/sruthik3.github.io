@@ -31,7 +31,7 @@ var g = svg.append("g")
             throw error;
         }
     data = data.filter(function(d) {
-    return d.Year > "1900";})
+    return d.Year > "1920";})
 
         xScale.domain(data.map(function(d) { return d.Year; }));
         yScale.domain([-0.60,1.80]); 

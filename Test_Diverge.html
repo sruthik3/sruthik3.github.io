@@ -51,14 +51,19 @@
 /*xScale.domain([1900,2020]);
 yScale.domain([-0.60,1.80]);*/
 
+legend.append("text")
+    	.attr("x", width - cfg.legendRightMargin)
+    	.attr("text-anchor", "end")
+    	.text("Years");
     
     legend.append("text")
       .attr("x", width - cfg.legendRightMargin)
+    	.attr("y", 20)
     	.attr("text-anchor", "end")
     	.style("opacity", 0.5)
     	.text("Global Surface Temperature growth");
     
-    d3.csv("https://aravindsp.github.io/cs498datavis/Global_Temp.csv", parse, function(error, data) {
+    d3.csv("https://sruthik3.github.io/Global_Temp.csv", parse, function(error, data) {
       if (error) throw error;
       
       data = data.filter(function(d) {

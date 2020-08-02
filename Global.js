@@ -20,7 +20,7 @@ var startDate = new Year("1900-01-01"),
 var x = d3.scaleBand().range([0, width]);
 var y = d3.scaleLinear().range([height, 0]);
 
-x.domain(data.map(function(d) { return d.Year; })
+x.domain(data.map(function(d) { return d.Year; });
 y.domain([-0.60,1.80]);
 
 var g = svg.append("g")
@@ -29,7 +29,7 @@ var g = svg.append("g")
 
 g.append("g")
 .attr("class", "axis axis--x")
-.attr("transform", "translate(0," + height + ")");
+.attr("transform", "translate(0," + height + ")")
 .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b")));
 
 g.append("g")
@@ -61,7 +61,7 @@ function plotChart(fileN,classN){
         d.Year = d.Year;
         d.Value = d.Value;});
     data = data.filter(function(d) {
-            return d.Year > "1900";})
+            return d.Year > 1900;})
 
     g.append("path")
         .datum(data)
@@ -207,7 +207,7 @@ function plotChartBack(fileN,classN)
 }
 */
 
-plotChart("Narrative_Visualization/Global_Temp.csv","line");
+plotChart("https://sruthik3.github.io/Global_Temp.csv","line");
 
 /*d3.select("#Checkbox2019").on("change",update2019);
 d3.select("#Checkbox2018").on("change",update2018);

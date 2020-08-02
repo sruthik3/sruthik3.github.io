@@ -1,5 +1,5 @@
 // Set Margins
-var margin = {top: 10, right: 30, bottom: 30, left: 60},
+var margin = {top: 10, right: 100, bottom: 30, left: 40},
     width = 800 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
@@ -13,15 +13,15 @@ var svg = d3.select("#Global")
           "translate(" + margin.left + "," + margin.top + ")");
 
 //Set Start ad End Dates for Axis
-var startDate = new Year("1900-01-01"),
-    endDate = new Year("2020-07-31");
+var startDate = new Date("1900-01-01"),
+    endDate = new Date("2020-12-31");
 
 //Plot Axis
-var x = d3.scaleBand().range([0, width]);
+var x = d3.scaleTime().range([0, width]);
 var y = d3.scaleLinear().range([height, 0]);
 
-x.domain(data.map(function(d) { return d.Year; });
-y.domain([-0.60,1.80]);
+x.domain([startDate,endDate]);
+y.domain([-0.55,1.10]);
 
 var g = svg.append("g")
 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -30,46 +30,60 @@ var g = svg.append("g")
 g.append("g")
 .attr("class", "axis axis--x")
 .attr("transform", "translate(0," + height + ")")
-.call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b")));
+.call(d3.axisBottom(x).tickFormat(d3.timeFormat("%Y")));
 
 g.append("g")
 .attr("class", "axis axis--y")
-.call(d3.axisLeft(y).ticks(6).tickFormat(function(d) { return parseInt(d); }))
+.call(d3.axisLeft(y).ticks(6).tickFormat(function(d) { return (Math.round(d * 100.0) / 100.0); }))
 .append("text")
 .attr("class", "axis-title")
 .attr("transform", "rotate(-90)")
 .attr("y", 6)
 .attr("dy", ".71em")
 .style("text-anchor", "end")
-.text("Index Value");
+.text("Temperature Rise");
 
 ///////////////////////////////////////////////////////////
 
-var line = d3.line()
+var area = d3.area()
 .x(function(d) { return x(d.Year); })
-.y(function(d) { return y(d.Value); });
+.y(function(d) { return y(d.Value); }); 
 
-//var parseTime = d3.timeParse("%Y%m%d")
-bisectYear = d3.bisector(function(d) { return d.Year; }).left;
+var parseTime = d3.timeParse("%Y")
+bisectDate = d3.bisector(function(d) { return d.Year; }).left;
 
 // Read File
 
 function plotChart(fileN,classN){
     d3.csv(fileN, function(error, data) {
         if (error) throw error;
+        data = data.filter(function(d) {
+          return d.Year >= "1900";})
         data.forEach(function(d) {
-        d.Year = d.Year;
-        d.Value = d.Value;});
-    data = data.filter(function(d) {
-            return d.Year > 1900;})
+        d.Year = parseTime(d.Year);
+        d.Value = +d.Value;});
+
+   /* g.append("path")
+        .datum(data)
+        .attr("class", classN)
+        .attr("d", area);
+        var focus = g.append("g")
+        .attr("class", "focus")
+        .style("display", "none"); */
 
     g.append("path")
         .datum(data)
-        .attr("class", classN)
-        .attr("d", line);
-    var focus = g.append("g")
-        .attr("class", "focus")
-        .style("display", "none");
+        .attr("fill", "#69b3a2")
+        .attr("fill-opacity", .8)
+        .attr("stroke", "none")
+        .attr("d", d3.area()
+          .x(function(d) { return x(d.Year) })
+          .y0( height )
+          .y1(function(d) { return y(d.Value) })
+          );
+          var focus = g.append("g")
+          .attr("class", "focus")
+          .style("display", "none");
 
     focus.append("line")
         .attr("class", "x-hover-line hover-line")
@@ -111,11 +125,27 @@ function plotChart(fileN,classN){
 
     ////////////////
 
-           /* Code below relevant for annotations 
+           /* Code below relevant for annotations */
+          /* var fh_x = data.filter(function(d){ return x(min(d.Value>0))};)
+           var fh_y = data.filter(y(function(d){return (min(d.Value)>0};)) */
            const annotations = [
             
           {
-            note: { label: "WHO declares global health emergency", 
+            note: { label: "First rise above 0 degree celsius", 
+              lineType:"none", 
+              orientation: "top",
+              "padding": 0.5, 
+              "align": "middle" },
+            className: "anomaly",
+            type: d3.annotationCalloutCircle,
+            subject: { radius: 8 },
+            data: { x: "1/30/1939", y: 0.01 },
+            dy: -80
+          },
+
+
+          {
+            note: { label: "Peak rise of 1 degree celsius", 
               lineType:"none", 
               orientation: "top",
               "padding": 2, 
@@ -123,35 +153,8 @@ function plotChart(fileN,classN){
             className: "anomaly",
             type: d3.annotationCalloutCircle,
             subject: { radius: 8 },
-            data: { x: "1/30/2020", y: 28859},
-            dy: -50
-          },
-
-
-          {
-            note: { label: "$2 trillion US stimulus bill signed", 
-              lineType:"none", 
-              orientation: "bottom",
-              "padding": 2, 
-              "align": "middle" },
-            className: "anomaly",
-            type: d3.annotationCalloutCircle,
-            subject: { radius: 8 },
-            data: { x: "3/27/2020", y: 21637},
-            dy: 60
-          },
-
-          {
-            note: { label: "US reaches 100,000 Covid deaths", 
-              lineType:"none", 
-              orientation: "top",
-              "padding": 2, 
-              "align": "middle" },
-            className: "anomaly",
-            type: d3.annotationCalloutCircle,
-            subject: { radius: 8 },
-            data: { x: "5/27/2020", y: 25548},
-            dy: -50
+            data: { x: "01/01/2016", y: 1.0},
+            dy: 10
           }
           
         ]
@@ -193,52 +196,22 @@ function plotChartBack(fileN,classN)
     d3.csv(fileN, function(error, data) {
         if (error) throw error;
         data.forEach(function(d) {
-        d.date = parseTime(d.date);
-        d.value = +d.value;});
+        d.Year = parseTime(d.Year);
+        d.Value = +d.Value;});
 
-    g.append("path")
+      g.append("path")
         .datum(data)
-        .attr("class", classN)
-        .attr("d", line);
+        .attr("fill", "#69b3a2")
+        .attr("fill-opacity", .8)
+        .attr("stroke", "none")
+        .attr("d", d3.area()
+          .x(function(d) { return x(d.Year) })
+          .y0( height )
+          .y1(function(d) { return y(d.Value) })
+          );
         var focus = g.append("g")
         .attr("class", "focus")
         .style("display", "none");
     });
 }
-*/
-
-plotChart("https://sruthik3.github.io/Global_Temp.csv","line");
-
-/*d3.select("#Checkbox2019").on("change",update2019);
-d3.select("#Checkbox2018").on("change",update2018);
-d3.select("#Checkbox2017").on("change",update2017);
-
-function update2019(){
-if(d3.select("#Checkbox2019").property("checked"))
-    {
-        plotChartBack("https://aravindsp.github.io/cs498datavis/dow/2019.csv","line2019");
-    }
-        else {
-        d3.select("path.line2019").remove();
-            }		
-    }
-
-function update2018(){
-if(d3.select("#Checkbox2018").property("checked"))
-    {
-        plotChartBack("https://aravindsp.github.io/cs498datavis/dow/2018.csv","line2018");
-    }
-        else {
-        d3.select("path.line2018").remove();
-            }		
-    }
-
-function update2017(){
-        if(d3.select("#Checkbox2017").property("checked"))
-            {
-                plotChartBack("https://aravindsp.github.io/cs498datavis/dow/2017.csv","line2017");
-            }
-                else {
-                d3.select("path.line2017").remove();
-                    }		
-            } */
+plotChart("https://sruthik3.github.io/Global_Temp.csv","area");

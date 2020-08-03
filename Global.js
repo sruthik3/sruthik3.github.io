@@ -50,7 +50,7 @@ var area = d3.area()
 .y(function(d) { return y(d.Value); }); 
 
 var parseTime = d3.timeParse("%Y")
-bisectDate = d3.bisector(function(d) { return d.Year; }).left;
+bisectYear = d3.bisector(function(d) { return d.Year; }).left;
 
 // Read File
 
@@ -58,7 +58,7 @@ function plotChart(fileN,classN){
     d3.csv(fileN, function(error, data) {
         if (error) throw error;
         data = data.filter(function(d) {
-          return d.Year >= "1900";})
+          return d.Year >= 1900;})
         data.forEach(function(d) {
         d.Year = parseTime(d.Year);
         d.Value = +d.Value;});
@@ -118,7 +118,7 @@ function plotChart(fileN,classN){
           d1 = data[i],
           d = x0 - d0.Year > d1.Year - x0 ? d1 : d0;
       focus.attr("transform", "translate(" + x(d.Year) + "," + y(d.Value) + ")");
-      focus.select("text").text(function() { return d.Value; });
+      focus.select("text").text(function() { return [d.Year.toISOString().substring(0,4),d.Value]; });
       focus.select(".x-hover-line").attr("y2", height - y(d.Value));
       focus.select(".y-hover-line").attr("x2", width + width);
     }

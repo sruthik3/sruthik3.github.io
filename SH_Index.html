@@ -115,27 +115,26 @@
 <br>
 <div class="container">
   <div style="font-size: 26px;font-weight: bold;">
-    <button onclick="window.location.href = 'Index.html'"; style="cursor: pointer; box-shadow: 2px 4px; font-size: 18px;font-weight: bold; background-color:#659dbd;" class="btn active">Global</button>
+    <button onclick="window.location.href = 'Index.html'"; style="font-size: 14px;font-weight: bold;background-color:grey;" class="btn">Global</button>
     <button onclick="window.location.href = 'NH_Index.html'"; style="font-size: 14px;font-weight: bold;background-color:grey;" class="btn">Northern Hemisphere</button>
-    <button onclick="window.location.href = 'SH_Index.html'"; style="font-size: 14px;font-weight: bold;background-color:grey;" class="btn">Southern Hemisphere</button>
+    <button onclick="window.location.href = 'SH_Index.html'"; style="cursor: pointer; box-shadow: 2px 4px; font-size: 16px;font-weight: bold; background-color:#659dbd;" class="btn active">Southern Hemisphere</button>
   </div>
 </div>
-  <br>
-  <div class="container">
+<br>
+<div class="container">
     <div class="row">
-      <div class="col-md-8" style="text-decoration-line: underline; font-size: 22px;"align="right">Global Land & Ocean Temperature Anomalies </div>
+      <div class="col-md-8" style="text-decoration-line: underline; font-size: 22px;"align="right">Southern Hemisphere Temperature Anomalies </div>
     </div>
-    <div id="Global" class="col-md-8"></div>
-    <br><br>
+    <div id="South" class="col-md-8"></div>
     <br><br>
     <div class="row">
       <br><br>
       <div {padding: 30px 40px 40px 100px;} class="col-md-4 style="box-shadow: 5px 10px #888888; background-color:lavender; font-size: 18px; border-radius: 20px;" align="justify">
-        <p style="font-size:18px">Key observations from Global Temperature Plot:</p>
+        <p style="font-size:18px">Key observations from Southern Hemisphere Temperature Plot:</p>
         <ul>
-            <li style="font-size:16px">Global average surface temperatures have increased more than 0.9 degress Celsius since the late 20th century </li>
-            <li style="font-size:16px">The years before 1939 are considered cooler than years after 1939 since the temperature rose above 0 degree Celsius and kept consistently rising</li>
-            <li style="font-size:16px">Most of the global warming occurred in the past 35 years, with 2016 being the warmest year on record with peak temperature rise of 1 degree Celsius</li>
+            <li style="font-size:16px">Average surface temperatures in northern hemisphere show a much steeper increase over the period of 20th century suggesting a faster warming trend in Northern hemisphere, attributing to  melting of Arctic sea ice </li>
+            <li style="font-size:16px">There was an early rise in temperature above 0 degrees Celsius in 1937 when compared to globally first rise above 0 degrees Celsius in 1939 </li>
+            <li style="font-size:16px">Similar to the global observation, 2016 is the warmest year on record with peak temperature rise of 1.22 degree Celsius in Northern Hemisphere</li>
         </ul>
         <br><br>
       </div>
@@ -147,7 +146,7 @@
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.6.0/d3.min.js"></script>
-  <script src="Global.js"></script>
+  <script src="SouthernHemisphere.js"></script>
   <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script> 
 </body>
 

@@ -7,7 +7,7 @@ var margin = {top: 10, right: 100, bottom: 30, left: 40},
 var svg = d3.select("#North")
   .append("svg")
     .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom+50)
+    .attr("height", height + margin.top + margin.bottom-1)
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
@@ -21,7 +21,7 @@ var x = d3.scaleTime().range([0, width]);
 var y = d3.scaleLinear().range([height, 0]);
 
 x.domain([startDate,endDate]);
-y.domain([-0.55,1.10]);
+y.domain([-0.55,1.30]);
 
 var g = svg.append("g")
 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -153,7 +153,7 @@ function plotChart(fileN,classN){
             className: "anomaly",
             type: d3.annotationCalloutCircle,
             subject: { radius: 8 },
-            data: { x: "01/01/2016", y: 1.14},
+            data: { x: "01/01/2016", y: 1.22},
             dy: 10
           }
           

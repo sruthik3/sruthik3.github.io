@@ -4,7 +4,7 @@ var margin = {top: 10, right: 100, bottom: 30, left: 40},
     height = 500 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
-var svg = d3.select("#NorthernHemipshere")
+var svg = d3.select("#North")
   .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom+50)
@@ -131,7 +131,7 @@ function plotChart(fileN,classN){
            const annotations = [
             
           {
-            note: { label: "First rise above 0 degree celsius", 
+            note: { label: "First rise above 0 degree Celsius", 
               lineType:"none", 
               orientation: "top",
               "padding": 0.5, 
@@ -139,13 +139,13 @@ function plotChart(fileN,classN){
             className: "anomaly",
             type: d3.annotationCalloutCircle,
             subject: { radius: 8 },
-            data: { x: "1/30/1939", y: 0.01 },
+            data: { x: "1/30/1937", y: 0.09 },
             dy: -80
           },
 
 
           {
-            note: { label: "Peak rise of 1 degree celsius", 
+            note: { label: "Peak rise of 1.14 degree Celsius", 
               lineType:"none", 
               orientation: "top",
               "padding": 2, 
@@ -153,7 +153,7 @@ function plotChart(fileN,classN){
             className: "anomaly",
             type: d3.annotationCalloutCircle,
             subject: { radius: 8 },
-            data: { x: "01/01/2016", y: 1.0},
+            data: { x: "01/01/2016", y: 1.14},
             dy: 10
           }
           
@@ -214,4 +214,4 @@ function plotChartBack(fileN,classN)
         .style("display", "none");
     });
 }
-plotChart("https://sruthik3.github.io/Global_Temp.csv","area");
+plotChart("https://sruthik3.github.io/Northern_Hemisphere_Temp.csv","area");
